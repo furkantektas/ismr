@@ -1,11 +1,9 @@
-Kurulum Kılavuzu	{#welcome}
+Kurulum Kılavuzu
 =====================
-[TOC]
-
-##1. Kodların Derlenmesi {#compiling}
+##1. Kodların Derlenmesi
 
 ###1.1 Client
-[ISMR Repo][1]'sundan kodları indirin. [Gerekli yazılımları][2] bilgisayarınıza kurduktan sonra **Client** klasörünün içerisine girip **buildAll.sh** dosyasını çalıştırarak kodları derleyin.
+[ISMR Repo][1]'sundan kodları indirin. Gerekli yazılımları bilgisayarınıza kurduktan sonra **Client** klasörünün içerisine girip **buildAll.sh** dosyasını çalıştırarak kodları derleyin.
 
 ```
 ./buildAll.sh
@@ -21,7 +19,7 @@ Robotun içerisindeki /home/pi klasöründe repodaki **Raspberry PI** klasörü 
 ```
 
 
-##2. Robota Güç Verilmesi  {#initsh}
+##2. Robota Güç Verilmesi
 ISMR robota güç vermek için 5V 1A çıkış veren PowerBank'i Raspberry PI'a micro USB girişinden, 11V'luk LiPo'yu ise kırmızı motor driver board'dan çıkan mavi kabloya Vcc, siyah kabloya ground gelecek şekilde bağlayın. Robot açılırken client tarafında start isimli dosyayı çalıştırdığınıza emin olun. Eğer robot daha önce açılmışsa start dosyasını çalıştırdıktan sonra robot içerisinde /home/pi klasörüne giderek init.sh scriptini tekrar çalıştırın.
 
 ```
@@ -39,7 +37,7 @@ ISMR **GYTE_Bilmuh** SSID ile yayın yapa kablosuz ağa otomatik olarak bağlan�
 ```
 
 > **İlk Kez Çalıştırma:** 
-Robot'un kendi IP adresini göndereceği client'ın IP adresi /home/pi/init.sh dosyasında SERVERIP değişkeninde tanımlanmıştır. Bu nedenle IP adresinizi önelikle bu dosyaya girerek [2.başlıkta][3] belirtildiği gibi init.sh scriptini tekrar çalıştırın.
+Robot'un kendi IP adresini göndereceği client'ın IP adresi /home/pi/init.sh dosyasında SERVERIP değişkeninde tanımlanmıştır. Bu nedenle IP adresinizi önelikle bu dosyaya girerek 2.başlıkta belirtildiği gibi init.sh scriptini tekrar çalıştırın.
 > 
 > *Robota ilk erişim için eth0 arayüzü kullanılabilir.*
 
@@ -88,11 +86,3 @@ Program hata mesajları:
 
 
   [1]: https://github.com/furkantektas/ismr
-  [2]: #requiredlibs
-  [3]: #initsh
-  [4]: http://math.stackexchange.com/
-  [5]: http://daringfireball.net/projects/markdown/syntax "Markdown"
-  [6]: https://github.com/jmcmanus/pagedown-extra "Pagedown Extra"
-  [7]: http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference
-  [8]: https://code.google.com/p/google-code-prettify/
-  [9]: http://highlightjs.org/
