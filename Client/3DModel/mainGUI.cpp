@@ -10,7 +10,20 @@ namespaces. We also store a pointer to the Irrlicht device,
 a counter variable for changing the creation position of a window,
 and a pointer to a listbox.
 */
-#include "Simulation.h"
+#include <irrlicht/irrlicht.h>
+#include "Route.h"
+#include <irrlicht/ICursorControl.h>
+#include <thread>
+#include <stdio.h>
+#include <sys/types.h> 
+#include <sys/socket.h>
+#include <arpa/inet.h> //inet_addr
+#include <netinet/in.h>
+#include <netdb.h>
+#include <string.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <errno.h>
 
 
 using namespace irr;
@@ -41,7 +54,8 @@ enum
 	GUI_ID_GIT,
 	GUI_ID_COMBO1,
 	GUI_ID_COMBO2,
-	GUI_ID_BASLANGICAYARLA
+	GUI_ID_BASLANGICAYARLA,
+	GUI_ID_ACIL
 };
 
 
@@ -49,8 +63,8 @@ enum
 double HIZ ;
 double MetreBUYUTME ;
 
-
-double KAT_Y[] = {276,695,1110};
+// ne verirsen elinle o gelir seninle.
+double KAT_Y[] = {276,695,1120};
 
 int BULUNDUGUM_KAT = 1;
 int HEDEFKAT = 0;
@@ -85,6 +99,7 @@ vector3df cameraRotation;
 pthread_t portThread,BPlaniThread;
 int runControl = 1;
 int BPlaniPanik = 0;
+int durButton = 0;
 
 double XPos_Positive = 0;
 double XPos_Negative = 0;
@@ -101,8 +116,7 @@ void GUIAdd();
 void sendDataT(char* ip,int port,Data_t data);
 void sendDataT(char* ip,int port,Data_t data);
 void *sendString(void *msg);
-void sendDataSTRING(const char* ip,int port);
-void run(IrrlichtDevice *device);
+void sendDataSTRING(char* ip,int port);
 void isikEkle();
 
 
@@ -146,8 +160,16 @@ public:
 
 						case GUI_ID_GIT:
 							{
-								gitButtonClicked(1);
-								str = L"BILGI EKRANI";
+								if(durButton == 0){
+									gitButtonClicked(1);
+									str = L"BILGI EKRANI";
+								}
+								else{
+									durButton = 0;
+		
+								}
+
+								
 							}
 							return true;
 
@@ -160,9 +182,24 @@ public:
 							}
 							return true;
 
+						case GUI_ID_ACIL:
+						{
+							
+							durButton = 1;
+
+							
+						}
+						return true;
+
 
 						default:
 							return false;
+					}
+					break;
+
+				case EGET_FILE_SELECTED:
+					{
+
 					}
 					break;
 
@@ -186,7 +223,12 @@ private:
 };
 
 
-void Simulation::initializeAndRun()
+/*
+Ok, now for the more interesting part. First, create the Irrlicht device. As in
+some examples before, we ask the user which driver he wants to use for this
+example:
+*/
+int main(int argc,char* argv[])
 {
 
 	IrrlichtDevice * device = createDevice(video::EDT_OPENGL, core::dimension2d<u32>(640, 500));
@@ -195,7 +237,7 @@ void Simulation::initializeAndRun()
 	IP = argv[1];
 
 	if (device == 0)
-		 exit(1); // could not create selected driver.
+		return 1; // could not create selected driver.
 
 	/* The creation was successful, now we set the event receiver and
 		store pointers to the driver and to the gui environment. */
@@ -220,7 +262,7 @@ void Simulation::initializeAndRun()
 	scene::ITriangleSelector* selector = 0 ;
 
 	isikEkle();
-
+	
 	// Creates the mesh
 	mesh = device->getSceneManager()->getMesh( "kat.obj" );
 
@@ -230,7 +272,7 @@ void Simulation::initializeAndRun()
 
 	// Create animated scene node.
 	bina = smgr->addMeshSceneNode(mesh);
-
+//218
 	bina->setPosition(core::vector3df(0, 0, 0));
 	bina->setScale(core::vector3df(1,1,1));
 
@@ -270,6 +312,7 @@ void Simulation::initializeAndRun()
 	cam->setRotation(core::vector3df(0, -90, 0));
 	cam->setTarget(player->getPosition());
 
+	int status = 0;
 
 	env = device->getGUIEnvironment();
 
@@ -288,18 +331,6 @@ void Simulation::initializeAndRun()
 	str = L"BILGI EKRANI"; 
 
 
-	run(device);
-
-	device->drop();
-
-}
-
-
-void run(IrrlichtDevice *device){
-
-
-	int status = 0;
-
 	while(device->run() && driver){
 
 
@@ -310,6 +341,10 @@ void run(IrrlichtDevice *device){
 
         driver->endScene();
 
+		if(receiver.IsKeyDown(irr::KEY_KEY_X)){
+			device->drop();
+			exit(0);
+		}
 
 		playerPosition = player->getPosition();
 		camPosition = cam->getPosition();
@@ -317,7 +352,7 @@ void run(IrrlichtDevice *device){
 			//printf("%f %f %f\n",playerPosition.X,playerPosition.Y,playerPosition.Z);
 
 		if(XPos_Positive > 0.05 ){
-			if(BPlaniPanik == 0){
+			if(BPlaniPanik == 0 && durButton == 0){
 				runControl = 1;
 				if(status == 0){
 					camPosition = player->getPosition();
@@ -350,7 +385,7 @@ void run(IrrlichtDevice *device){
 		}
 
 		if(XPos_Negative > 0.05 ){
-			if(BPlaniPanik == 0){
+			if(BPlaniPanik == 0 && durButton == 0 ){
 				runControl = 1;
 				if(status == 0){
 					camPosition = player->getPosition();
@@ -384,7 +419,7 @@ void run(IrrlichtDevice *device){
 		}
 
 		if(ZPos_Positive > 0.05){
-			if(BPlaniPanik == 0){
+			if(BPlaniPanik == 0 && durButton == 0){
 				runControl = 1;
 				if(status == 0){
 					camPosition = player->getPosition();
@@ -417,7 +452,7 @@ void run(IrrlichtDevice *device){
 		}
 
 		if(ZPos_Negative > 0.05){
-			if(BPlaniPanik == 0){
+			if(BPlaniPanik == 0 && durButton == 0 ){
 				runControl = 1;
 
 				if(status == 0){
@@ -552,15 +587,45 @@ void run(IrrlichtDevice *device){
 		
 		myTextBox->setText(str.c_str());
 
+
+		if(receiver.IsKeyDown(irr::KEY_KEY_W)){
+				XPos_Positive = (1 * MetreBUYUTME);
+		}
+
+		if(receiver.IsKeyDown(irr::KEY_KEY_S)){
+				XPos_Negative = (1 * MetreBUYUTME);
+		}
+
+		if(receiver.IsKeyDown(irr::KEY_KEY_A)){
+				ZPos_Positive = (1 * MetreBUYUTME);
+		}
+
+		if(receiver.IsKeyDown(irr::KEY_KEY_D)){
+				ZPos_Negative = (1 * MetreBUYUTME);
+		}
+
+		if(receiver.IsKeyDown(irr::KEY_KEY_K)){
+				BPlaniPanik = 1;
+		}
+
+		if(receiver.IsKeyDown(irr::KEY_KEY_L)){
+				BPlaniPanik = 0;
+		}
+		
+
 	}
+
+	device->drop();
+
+	return 0;
 }
 
 void gitButtonClicked(int clicked){
 	
 	int select;
 	if(clicked == 1){
-		HIZ = 0.82 ; 
-		MetreBUYUTME = 96.34;
+		HIZ = 0.45; 
+		MetreBUYUTME = 175.5;
 		select = box2->getSelected();
 	}
 
@@ -597,6 +662,8 @@ void gitButtonClicked(int clicked){
 				break;
 		case 12: Next = KANTIN;
 				break;
+
+
 		case 13: Next = BASLANGIC1;
 				break;
 		case 14: Next = N123;
@@ -625,6 +692,8 @@ void gitButtonClicked(int clicked){
 				break;
 		case 26: Next = N24;
 				break;
+
+
 		case 27: Next = BASLANGIC2;
 				break;
 		case 28: Next = N254;
@@ -713,6 +782,7 @@ void gitButtonClicked(int clicked){
 	Current=Next;
 
 	if(MetreBUYUTME > 60){
+		printf("%s %d\n",IP,PORT);
 		sendDataT(IP,PORT,data);
 	}
 }
@@ -892,7 +962,7 @@ void *dataControlAndProccess(void* msg){
 				}
 				if(rotateControl == 1){	
 					data.route[i].way = ROTATE;
-					data.route[i].step = 0.1;
+					data.route[i].step = 0.051;
 					rotateControl = 0;
 				}
 
@@ -970,28 +1040,28 @@ void sendDataT(char* ip,int port,Data_t data){
     {
         printf("Could not create socket");
     }
-    puts("Socket created");
+ 
      
     server.sin_addr.s_addr = inet_addr(ip);
     server.sin_family = AF_INET;
     server.sin_port = htons( port );
- 
     //Connect to remote server
     if (connect(sock , (struct sockaddr *)&server , sizeof(server)) < 0){
-    	printf("Robota veri yollanmadi!! \n");
+    	printf("Robota veri yollanamadi!! \n");
     }
     else{
     	sendData( sock, &data );
+    	close(sock);
     }
 
 
      
-    close(sock);
+  
 }
 
 void *sendString(void *msg){
 	while(1){
-		sendDataSTRING("127.0.0.1",7578);
+		sendDataSTRING("192.168.43.196",7578);
 		sleep(3);
 	}
 	
@@ -999,7 +1069,7 @@ void *sendString(void *msg){
 };
 
 
-void sendDataSTRING(const char* ip,int port){
+void sendDataSTRING(char* ip,int port){
 	int sock;
     struct sockaddr_in server;
      
@@ -1009,7 +1079,6 @@ void sendDataSTRING(const char* ip,int port){
     {
         printf("Could not create socket");
     }
-    puts("Socket created");
      
     server.sin_addr.s_addr = inet_addr(ip);
     server.sin_family = AF_INET;
@@ -1018,14 +1087,13 @@ void sendDataSTRING(const char* ip,int port){
     //Connect to remote server
     while (connect(sock , (struct sockaddr *)&server , sizeof(server)) < 0);
      
-    puts("Connected\n");
-     
     sendData2( sock, &StringDATA );
 	StringDATA[0] = '\0';
    
      
     close(sock);
 }
+
 
 void GUIAdd(){
 	IGUISkin* skin = env->getSkin();
@@ -1189,8 +1257,10 @@ void GUIAdd(){
     env->addButton(core::rect<s32>(10,460,130,480), 0, GUI_ID_GIT, L"DEVAM");
 
     myTextBox = env->addStaticText(L"", rect<s32>(300,400,500,420), true);
-}
 
+
+    env->addButton(core::rect<s32>(140,460,290,480), 0, GUI_ID_ACIL, L"DUR");
+}
 
 void isikEkle(){
 	int isikParlaklik = 400;

@@ -560,7 +560,7 @@ void gitButtonClicked(int clicked){
 	int select;
 	if(clicked == 1){
 		HIZ = 0.82 ; 
-		MetreBUYUTME = 96.34;
+		MetreBUYUTME = 293;
 		select = box2->getSelected();
 	}
 
