@@ -1,62 +1,267 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>In School Mobile Robot by furkantektas</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="assets/ico/favicon.png">
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>ISMR - In School Mobile Robot</title>
+
+    <link href="assets/css/hover_pack.css" rel="stylesheet">
+
+    <!-- Bootstrap core CSS -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="assets/css/main.css" rel="stylesheet">
+    <link href="assets/css/colors/color-74c9be.css" rel="stylesheet">    
+    <link href="assets/css/animations.css" rel="stylesheet">
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+    
+    
+    <!-- JavaScripts needed at the beginning
+    ================================================== -->
+    
+    <!-- Main Jquery & Hover Effects. Should load first -->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+  
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>In School Mobile Robot</h1>
-        <p>In-School Mobile Robot (using Raspberry PI and Rover  5 Robot Chasis)</p>
-
-        <p class="view"><a href="https://github.com/furkantektas/ismr">View the Project on GitHub <small>furkantektas/ismr</small></a></p>
-
-
-        <ul>
-          <li><a href="https://github.com/furkantektas/ismr/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/furkantektas/ismr/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/furkantektas/ismr">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h3>
-<a name="in-school-mobile-robot" class="anchor" href="#in-school-mobile-robot"><span class="octicon octicon-link"></span></a>In School Mobile Robot</h3>
-
-<ul>
-<li>built with Raspberry PI</li>
-<li>bases on Rover 5 Robot Platform</li>
-<li>streams real time video with augmented location label</li>
-<li>shows real time 3D model using Irrlicht 3D</li>
-</ul><h1>
-<a name="required-libraries" class="anchor" href="#required-libraries"><span class="octicon octicon-link"></span></a>Required Libraries</h1>
-
-<p>ISMR uses Raspbian on the Raspberry PI. You should install the libraries below.</p>
-
-<ul>
-<li>vlc</li>
-</ul><p>For the client:</p>
-
-<ul>
-<li>Irrlicht (<a href="http://irrlicht.sourceforge.net/">http://irrlicht.sourceforge.net/</a>)</li>
-<li>OpenCV (<a href="http://opencv.org/downloads.html">http://opencv.org/downloads.html</a>)</li>
-<li>VLC (<a href="http://www.videolan.org/vlc/#download">http://www.videolan.org/vlc/#download</a>)</li>
-</ul>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/furkantektas">furkantektas</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
-    </div>
-    <script src="javascripts/scale.fix.js"></script>
     
+    <div id="headerwrap">
+    	<div class="container">
+			<div class="row centered">
+				<div class="col-lg-8 col-lg-offset-2 mt">
+					<h1 class="animation slideDown">ISMR</h1>
+                    <h2 class="animation slideDown">In-School Mobile Robot</h2>
+    				<p class="mt whitetext">ISMR developed as a term project in <a href="http://bilmuh.gyte.edu.tr" rel="external" target="_blank">Gebze Institute of Technology</a>.</p>
+				</div>
+				
+			</div><!-- /row -->
+    	</div><!-- /container -->
+    </div> <!-- /headerwrap -->
+
+	<div class="container">	
+
+		<div class="row mt centered ">
+			<div class="col-lg-4 col-lg-offset-4">
+				<h3>What Is ISMR?</h3>
+				<hr>
+			</div>
+		</div><!-- /row -->
+
+		<div class="row mt">
+			<div class="col-lg-4 col-md-4 col-xs-12 desc">
+				<img width="350" src="assets/img/badges-rover.png" class="center-block" alt="" />
+				<p>ISMR is a mobile robot which can go predefined destinations in a well-known building. The route is calculated by the client computer and sent to robot over wifi. Robot drives itself to destination.</p>
+			</div><!-- col-lg-4 -->
+			
+			<div class="col-lg-4 col-md-4 col-xs-12 desc">
+				<img width="350" src="assets/img/badges-raspicam.png" class="center-block" alt="" />
+				<p>ISMR sends a live video stream using RaspiCam. Stream can be played by any stream supported video player (like VLC). Client computer can see the stream with augmented text which indicates the robot's current location.</p>
+			</div><!-- col-lg-4 -->
+			
+			<div class="col-lg-4 col-md-4 col-xs-12 desc">
+				<img width="350" src="assets/img/badges-raspberry-and-driver.png" class="center-block" alt="" />
+				<p>ISMR uses Raspberry PI for both driving robot, communication and video streaming. ISMR can automatically connect preconfigured wifi networks and support roaming inside a building.</p>
+			</div><!-- col-lg-4 -->
+			
+		</div><!-- /row -->
+	</div><!-- /container -->
+	
+	<div id="cta01">
+    	<div class="container">
+    		<div class="row">
+    			<div class="col-lg-8 col-lg-offset-2">
+    				<h2>ISMR project is completely open source.<br />Both Client and Rover's codes are available at our GitHub Repo!</h2>
+    				<a type="button" rel="external" target="_blank" href="http://github.com/furkantektas/ismr" class="btn btn-cta btn-lg">Go to Repo</a>
+    			</div>
+    		</div><!-- /row -->
+    	</div><!-- /container -->
+    </div><! --/cta01 -->
+
+	<div id="grey">
+		<div class="container">
+			<div class="row mt centered ">
+				<div class="col-lg-4 col-lg-offset-4">
+					<h3>What We've Used?</h3>
+					<hr>
+				</div><!-- /col-lg-4 -->
+			</div><!-- /row -->
+			
+			<div class="row mt centered">
+				<div class="col-xs-3 pt">
+					<img class="img-responsive" src="assets/img/technologies/raspberry.png" alt="">
+				</div>
+				<div class="col-xs-3 pt">
+					<img class="img-responsive" src="assets/img/technologies/linux.png" alt="">
+				</div>
+				<div class="col-xs-3 pt">
+					<img class="img-responsive" src="assets/img/technologies/vlc.png" alt="">
+				</div>
+				<div class="col-xs-3 pt">
+					<img class="img-responsive" src="assets/img/technologies/irrlicht3d.png" alt="">
+				</div>
+			</div><!-- /row -->
+		</div><!-- /container -->
+	</div><!-- /grey -->
+    
+    
+    <div id="black">
+		<div class="container">
+			<div class="row mt centered ">
+				<div class="col-lg-10 col-lg-offset-1">
+					<div class='embed-container'><iframe src='https://player.vimeo.com/video/96597010' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></div>
+				</div><!-- /col-lg-4 -->
+			</div><!-- /row -->
+			
+		</div><!-- /container -->
+	</div><!-- /grey -->
+    
+	<div id="white">
+		<div class="container team">
+	    	<div class="row mt">
+	    		<div class="col-lg-4 col-lg-offset-4 centered">
+	    			<h3>Our Team</h3>
+	    			<hr>
+	    		</div>
+	    	</div><! --/row -->
+			
+			<div class="row">
+				<div class="col-lg-3 centered">
+					<div class="members">
+					  <img src="assets/img/team/burakakkaya.jpg" alt="">
+					  <div class="team-info">
+					    <div class="subhead">Burak</div>
+					    <h2 class="team-name">Akkaya</h2>
+					    <p class="team-description"><a href="http://github.com/brkakkaya" rel="external" target="_blank"><i class="fa fa-github"></i></a></p>
+					  </div>
+					</div>
+				</div><!-- /col-lg-3 -->
+				
+				<div class="col-lg-3 centered">
+					<div class="members">
+					  <img src="assets/img/team/furkantektas.jpg" alt="">
+					  <div class="team-info">
+					    <div class="subhead">Furkan</div>
+					    <h2 class="team-name">Tektaş</h2>
+					    <p class="team-description">
+                          <a href="http://furkantektas.com" rel="external" target="_blank"><i class="fa fa-user"></i></a>
+                          <a href="http://github.com/furkantektas" rel="external" target="_blank"><i class="fa fa-github"></i></a>
+                          <a href="http://google.com/+FurkanTektaş" rel="external" target="_blank"><i class="fa fa-google-plus"></i></a>
+                        </p>
+					  </div>
+					</div>
+				</div><!-- /col-lg-3 -->
+				
+				<div class="col-lg-3 centered">
+					<div class="members">
+					  <img src="assets/img/team/metehansemiz.jpg" alt="">
+					  <div class="team-info">
+					    <div class="subhead">Metehan</div>
+					    <h2 class="team-name">Semiz</h2>
+					    <p class="team-description"></p>
+					  </div>
+					</div>
+				</div><!-- /col-lg-3 -->
+              
+              <div class="col-lg-3 centered">
+					<div class="members">
+					  <img src="assets/img/team/emrebelen.jpg" alt="">
+					  <div class="team-info">
+					    <div class="subhead">Emre</div>
+					    <h2 class="team-name">Belen</h2>
+					    <p class="team-description"></p>
+					  </div>
+					</div>
+				</div><!-- /col-lg-3 -->
+
+			</div><! --/row -->	
+          
+          <div class="row">
+				<div class="col-lg-3 centered">
+					<div class="members">
+					  <img src="assets/img/team/sumeyyekarakavak.jpg" alt="">
+					  <div class="team-info">
+					    <div class="subhead">Sümeyye</div>
+					    <h2 class="team-name">Karakavak</h2>
+					    <p class="team-description"></p>
+					  </div>
+					</div>
+				</div><!-- /col-lg-3 -->
+				
+				<div class="col-lg-3 centered">
+					<div class="members">
+					  <img src="assets/img/team/ceyhuncozvelioglu.jpg" alt="">
+					  <div class="team-info">
+					    <div class="subhead">Ceyhun</div>
+					    <h2 class="team-name">Çözvelioğlu</h2>
+					    <p class="team-description"></p>
+					  </div>
+					</div>
+				</div><!-- /col-lg-3 -->
+				
+				<div class="col-lg-3 centered">
+					<div class="members">
+					  <img src="assets/img/team/feyyaztoptas.jpg" alt="">
+					  <div class="team-info">
+					    <div class="subhead">Feyyaz</div>
+					    <h2 class="team-name">Toptaş</h2>
+					    <p class="team-description"></p>
+					  </div>
+					</div>
+				</div><!-- /col-lg-3 -->
+              
+              <div class="col-lg-3 centered">
+					
+				</div><!-- /col-lg-3 -->
+
+			</div><! --/row -->	
+		</div><! --/container -->
+	</div><! --/white -->
+	
+	<div id="f">
+		<div class="container">
+			<div class="row pull-right">
+				Made with <i class="fa fa-heart"></i> in Istanbul - 2014 | Theme: Marco by BlackTie.co
+			</div><! --/row -->
+		</div><!-- /container -->
+	</div><!-- /f -->
+	
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/retina.js"></script>
+
+
+  	<script>
+		$(window).scroll(function() {
+			$('.si').each(function(){
+			var imagePos = $(this).offset().top;
+	
+			var topOfWindow = $(window).scrollTop();
+				if (imagePos < topOfWindow+400) {
+					$(this).addClass("slideUp");
+				}
+			});
+		});
+	</script>    
+
+
+
+  
   </body>
 </html>
