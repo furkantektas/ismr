@@ -3,7 +3,7 @@ Kurulum Kılavuzu
 ##1. Kodların Derlenmesi
 
 ###1.1 Client
-[ISMR Repo][1]'sundan kodları indirin. Gerekli yazılımları bilgisayarınıza kurduktan sonra **Client** klasörünün içerisine girip **buildAll.sh** dosyasını çalıştırarak kodları derleyin.
+[ISMR Repo][1]'sundan kodları indirin. [Gerekli yazılımları](../blob/master/RequiredLibrariesAndSoftwares.md) bilgisayarınıza kurduktan sonra **Client** klasörünün içerisine girip **buildAll.sh** dosyasını çalıştırarak kodları derleyin.
 
 ```
 ./buildAll.sh
